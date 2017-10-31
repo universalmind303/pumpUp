@@ -2,47 +2,58 @@ import React from 'react'
 import { Text,
   View,
   StyleSheet,
-  FlatList,
+  TouchableOpacity,
+  ScrollView,
   Dimensions,
   Image }    from 'react-native'
 import { connect } from 'react-redux'
 
-import { fetchUser } from '../actions/index'
+import { fetchUser, toggleBio } from '../actions/user'
 
-const {height, width} = Dimensions.get('window');
+const {height, width} = Dimensions.get('window')
 
 
-const Header = function ({user: { isNotStarted, isLoading, data}, getUserProfile}){
+const Header = function ( {
+  user: {
+    isNotStarted,
+    isLoading,
+    data,
+    bioToggle
+  },
+  getUserProfile,
+  toggleBio
+} ){
   if(isNotStarted) {
     getUserProfile()
   }
   if(isLoading) {
     return (
-
       <View>
         <Text style={styles.color} >is loading</Text>
       </View>
     )
   }
-  console.log(data)
   return (
-    <View>
+    <ScrollView>
       <View style={styles.topBorder} />
-      <View style={styles.header}>
+      <View style={[styles.header, {height: bioToggle ? height : height * 0.2}]}>
         <View style={{flex: 1, flexDirection: 'row'}}>
-          <Image source={{uri: data.profileImage}} style={styles.profileImage}/>
-          <View style={styles.profileInfo} >
-            <Text>{data.name}</Text>
-            <Text>{data.bio
-              .split('\n')
-              .slice(0,2)}...read more</Text>
+          <Image source={{uri: data.profileThumbnail}} style={styles.profileImage}/>
+          <View style={styles.profileInfo}>
+            <Text style={styles.userName}>{data.name.toUpperCase()}</Text>
+            <TouchableOpacity onPress={toggleBio}>
+              <Text>{!bioToggle
+                ? data.bio.split('\n').slice(0,2)
+                : data.bio} ...read {bioToggle ? 'less' : 'more'}</Text>
+            </TouchableOpacity>
           </View>
         </View>
-        {/* </View> */}
       </View>
-    </View>
+    </ScrollView>
   )
 }
+
+// styles [CTRL+ENTER]
 
 const profileImageSize = height * 0.18
 const styles = StyleSheet.create({
@@ -55,35 +66,44 @@ const styles = StyleSheet.create({
     paddingRight: 20,
   },
   profileInfo: {
+    marginTop: height * 0.05,
     paddingLeft:20,
     width : width -  profileImageSize,
-    backgroundColor: 'gray'
+    flexWrap: 'wrap',
+    alignItems: 'flex-start',
+    flexDirection:'row',
   },
   topBorder: {
     height: height * 0.02,
-    backgroundColor: '#cbae82'
+    backgroundColor: '#a094b7'
+  },
+  userName: {
+    fontWeight: 'bold',
+    fontSize: 15,
   },
   header: {
     flexDirection: 'row',
     elevation: 8,
     borderBottomColor: null,
     borderColor: 'transparent',
-    height: height * 0.2 ,
-    backgroundColor: '#ffe0b2',
+    backgroundColor: '#d1c4e9',
   },
   color: {
     color: 'red'
   },
-  box: {
-    flex: 1
+})
+
+const mapState = function(state) {
+  return {
+    user: state.user
   }
+}
 
-})
-
-const mapState = state => ({user: state.user})
-
-const mapDispatch = dispatch => ({
-  getUserProfile: () => dispatch(fetchUser(dispatch))
-})
+const mapDispatch = function(dispatch) {
+  return {
+    toggleBio: () => dispatch(toggleBio()),
+    getUserProfile: () => dispatch(fetchUser(dispatch))
+  }
+}
 
 export default connect(mapState, mapDispatch)(Header)

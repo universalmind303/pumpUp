@@ -6,7 +6,7 @@ const sessionToken = [
   'UK2qP1yk9QLk_Bkx1Ly0RPaitRYtec8ojZhzYRc0D-g'
 ].join('')
 
-export const userProfile = async function() {
+export const getUserProfile = async function() {
 
   const payload = await axios.post('http://api.pumpup.com/1/classes/User/318381 ', {
     '_method': 'GET',
