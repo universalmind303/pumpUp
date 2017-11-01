@@ -9,7 +9,8 @@ import {
 
 import {connect}     from 'react-redux'
 
-import {updateIndex, selectorTest} from '../actions/photos'
+import {updateIndex} from '../actions/photos'
+import {selectorTest} from '../selectors/photos'
 
 const { width } = Dimensions.get('window')
 
@@ -19,7 +20,6 @@ function NavDots({
   handlePress,
   selector
 }) {
-  console.log('selector', selector)
   const scrollX = new Animated.Value(0)
   const position = Animated.divide(scrollX, width)
   return (
@@ -31,7 +31,7 @@ function NavDots({
           extrapolate: 'clamp'
         })
         return (
-          <TouchableOpacity onPress={() =>handlePress(index)}
+          <TouchableOpacity onPress={() =>handlePress(selector.index)}
             key={i}>
             <Animated.View
               style={[{opacity}, styles.dots]}
@@ -54,7 +54,6 @@ const styles = StyleSheet.create({
 })
 
 const mapState = ({photos}) => {
-
   return {
     index: photos.index,
     selector: selectorTest(photos)

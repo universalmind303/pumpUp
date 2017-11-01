@@ -6,7 +6,7 @@ const sessionToken = [
   'UK2qP1yk9QLk_Bkx1Ly0RPaitRYtec8ojZhzYRc0D-g'
 ].join('')
 
-export const getUserProfile = async function() {
+export async function getUserProfile() {
 
   const payload = await axios.post('http://api.pumpup.com/1/classes/User/318381 ', {
     '_method': 'GET',
@@ -17,7 +17,7 @@ export const getUserProfile = async function() {
   return payload
 }
 
-export const userFeedPhotos = async function () {
+export async function userFeedPhotos() {
 
   const payload = axios.post('http://api.pumpup.com/1/functions/feed/profile/load-batch', {
     'isThumbnailsOnly': true,
@@ -31,7 +31,7 @@ export const userFeedPhotos = async function () {
   return payload
 }
 
-export const popularFeedPhotos = async function () {
+export async function popularFeedPhotos() {
 
   const payload = axios.post('http://api.pumpup.com/1/functions/feed/popular/load-batch',{
     'isThumbnailsOnly': true,

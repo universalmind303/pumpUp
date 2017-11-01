@@ -1,6 +1,4 @@
 import { userFeedPhotos } from './service'
-import { createSelector } from 'reselect'
-
 
 export function photoRequest() {
   return {
@@ -8,11 +6,7 @@ export function photoRequest() {
   }
 }
 
-const indexSelector = state => state
-export function selectorTest(state) {
-  console.log(state)
-  return createSelector([indexSelector], items => items)
-}
+
 export function photoDataFailure(error) {
   return {
     type: 'PHOTO_FETCH_ERROR',
@@ -41,7 +35,6 @@ export function positionEnd({nativeEvent}) {
 }
 
 export function updateIndex(index) {
-  console.log(index.nativeEvent)
   return {
     type: 'UPDATE_INDEX',
     index: index

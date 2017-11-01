@@ -13,7 +13,7 @@ import { fetchUser, toggleBio } from '../actions/user'
 const {height, width} = Dimensions.get('window')
 
 
-const Header = function ( {
+function Header ( {
   user: {
     isNotStarted,
     isLoading,
@@ -93,13 +93,13 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapState = function(state) {
+function mapState(state) {
   return {
     user: state.user
   }
 }
 
-const mapDispatch = function(dispatch) {
+function mapDispatch(dispatch) {
   return {
     toggleBio: () => dispatch(toggleBio()),
     getUserProfile: () => dispatch(fetchUser(dispatch))

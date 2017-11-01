@@ -28,12 +28,16 @@ export function toggleBio() {
 }
 
 export function fetchUser(dispatch) {
+
   dispatch(userRequest())
+
   return async function () {
 
     try {
       const payload = await getUserProfile()
-      return  dispatch(userDataSuccess({data: payload.data}))
+      return  dispatch(userDataSuccess({
+        data: payload.data
+      }))
     } catch (error) {
       return dispatch(userDataFailure(error))
     }

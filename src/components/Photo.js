@@ -6,9 +6,11 @@ import {
   StyleSheet
 }            from 'react-native'
 
+export default Photo
+
 const { width } = Dimensions.get('window')
 
-export default function Photo({photo}) {
+function Photo({photo}) {
   return (
     <View style={styles.border}>
       <Image

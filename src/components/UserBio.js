@@ -1,14 +1,15 @@
-import React from 'react'
-import {Text} from 'react-native'
-
+import React     from 'react'
+import {Text}    from 'react-native'
 import {connect} from 'react-redux'
 
+export default connect(mapState)(UserBio)
 
 function UserBio({data}) {
-  console.log(data)
   return <Text>{data.bio}</Text>
 }
 
-const mapState = ({user}) => ({data: user.data})
-
-export default connect(mapState)(UserBio)
+function mapState({user}) {
+  return {
+    data: user.data
+  }
+}

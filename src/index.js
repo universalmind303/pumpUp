@@ -6,8 +6,9 @@ import Header from './containers/Header'
 import Grid from './containers/Grid'
 import Swiper from './containers/Swiper'
 
+export default App
 
-const App = function () {
+function App() {
   return (
     <View>
       <Header/>
@@ -18,5 +19,3 @@ const App = function () {
     </View>
   )
 }
-
-export default App

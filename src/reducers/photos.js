@@ -1,3 +1,6 @@
+export default PhotoReducer
+
+
 const photoState = {
   isNotStarted: true,
   isLoading: true,
@@ -12,9 +15,9 @@ const photoState = {
 
 
 function PhotoReducer(state=photoState, action) {
+  console.log('reducer called')
   const handlers = {
     'POSITION_START': () => {
-      
       return {
         ...state,
         position: {
@@ -24,7 +27,6 @@ function PhotoReducer(state=photoState, action) {
       }
     },
     'POSITION_END': () => {
-
       let i = state.index
       if(action.end > state.position.start) {
         i = i + 1
@@ -54,8 +56,3 @@ function PhotoReducer(state=photoState, action) {
   }
   return handlers[action.type] ? handlers[action.type]() : state
 }
-
-
-
-
-export default PhotoReducer

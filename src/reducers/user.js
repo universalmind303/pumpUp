@@ -1,3 +1,6 @@
+export default UserReducer
+
+
 const userState = {
   isNotStarted: true,
   isLoading: true,
@@ -6,7 +9,7 @@ const userState = {
 }
 
 
-function user(state=userState, action) {
+function UserReducer(state=userState, action) {
   const handlers = {
     'USER_REQUEST': () => ({
       ...state,
@@ -25,5 +28,3 @@ function user(state=userState, action) {
   }
   return handlers[action.type] ? handlers[action.type]() : state
 }
-
-export default user

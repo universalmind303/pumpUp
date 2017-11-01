@@ -1,31 +1,28 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
-import React from 'react'
-import App from './src/index'
-import rootReducer from './src/reducers/index'
+import React        from 'react'
+import App          from './src/index'
+import rootReducer  from './src/reducers/index'
 
 // redux
 import { Provider } from 'react-redux'
-import { createStore, applyMiddleware, compose } from 'redux'
-import thunk from 'redux-thunk'
+import {
+  createStore,
+  applyMiddleware,
+  compose
+}                   from 'redux'
+import thunk        from 'redux-thunk'
 
+export default Main
 
 const middleware = [thunk]
-const store = compose(
+const store      = compose(
   applyMiddleware(...middleware)
 )(createStore)(rootReducer)
 
 
-const Main = function () {
+function Main() {
   return (
     <Provider store={store} >
       <App />
     </Provider>
   )
 }
-
-export default Main
