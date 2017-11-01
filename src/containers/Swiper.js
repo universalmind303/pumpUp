@@ -1,26 +1,43 @@
-import React from 'react'
+import React                           from 'react'
 import {
   Text,
-  Image,
   StyleSheet,
   View,
-  ScrollView,
-  Dimensions } from 'react-native'
-import {connect} from 'react-redux'
+  FlatList,
+  Animated,
+  // Dimensions,
+}                                      from 'react-native'
+import {connect}                       from 'react-redux'
 
-import { fetchPhotos } from '../actions/photos'
+import {
+  fetchPhotos,
+  positionStart,
+  positionEnd
+}                                      from '../actions/photos'
+import NavDots                         from '../components/navDots'
+import Photo                           from '../components/Photo'
 
-const {height, width} = Dimensions.get('window')
 
-function photoMap(photo) {
+// const { width } = Dimensions.get('window')
+const scrollX = new Animated.Value(0)
+
+function photoRender({item}) {
   return (
-    <Image
-      source={{uri: photo.thumbnail}}
-      style={styles.largeImage}
-      key={photo.objectId}
-    />
+    <Photo
+      photo={item}
+      key={item.objectId}/>
   )
 }
+
+// function onDragEnd({nativeEvent}, dispatch) {
+//   console.log(dispatch)
+//   return dispatch(nativeEvent.contentOffset.x)
+//   // const fullWidth = nativeEvent.contentSize.width
+//   // if offset gets bigger ++
+//   // else --
+//   // console.log(fullWidth, contentSize)
+//   // console.log()
+// }
 
 function Swiper({
   photos: {
@@ -28,7 +45,9 @@ function Swiper({
     isLoading,
     data
   },
-  getPhotos
+  getPhotos,
+  updateStartPosition,
+  updateEndPosition
 })
 {
   if(isNotStarted){
@@ -37,20 +56,19 @@ function Swiper({
   if(isLoading) {
     return <Text>Swiper</Text>
   }
-  console.log(data)
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <View
-        // this will bound the size of the ScrollView to be a square because
-        // by default, it will expand regardless if it has a flex value or not
-        style={{ width, height: width }}>
-        <ScrollView
-          horizontal={true}
-          pagingEnabled={true} // animates ScrollView to nearest multiple of it's own width
-          showsHorizontalScrollIndicator={false}>
-          {data.result.posts.map(photoMap)}
-        </ScrollView>
-      </View>
+    <View style={styles.container}>
+      <FlatList
+        onScrollBeginDrag={updateStartPosition}
+        onScrollEndDrag={updateEndPosition}
+        horizontal={true}
+        keyExtractor={item => item.objectId}
+        pagingEnabled={true}
+        showsHorizontalScrollIndicator={false}
+        data={data.result.posts}
+        renderItem={photoRender}
+      />
+      <NavDots photos={data.result.posts} />
     </View>
   )
 }
@@ -65,17 +83,17 @@ const mapState = function({photos}) {
 
 const mapDispatch = function(dispatch) {
   return {
-    getPhotos: () => dispatch(fetchPhotos(dispatch))
+    getPhotos: () => dispatch(fetchPhotos(dispatch)),
+    updateStartPosition: ctx => dispatch(positionStart(ctx, scrollX)),
+    updateEndPosition: ctx => dispatch(positionEnd(ctx))
   }
 }
 
 const styles = StyleSheet.create({
-  largeImage: {
-    marginTop:20,
-    marginLeft: 20,
-    marginRight: 20,
-    height: width ,
-    width: width,
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 })
 
