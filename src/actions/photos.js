@@ -1,25 +1,8 @@
-import { userFeedPhotos } from './service'
+import { dataFailure, dataSuccess, dataRequest } from './requests'
+import { userFeedPhotos }                        from './service'
 
-export function photoRequest() {
-  return {
-    type: 'PHOTO_REQUEST'
-  }
-}
-
-
-export function photoDataFailure(error) {
-  return {
-    type: 'PHOTO_FETCH_ERROR',
-    error: error
-  }
-}
-
-export function photoDataSuccess({data}) {
-  return {
-    type: 'PHOTO_FETCH_DATA_SUCCESS',
-    data: data
-  }
-}
+import {Animated, Dimensions } from 'react-native'
+const { width } = Dimensions.get('window')
 
 export function positionStart({nativeEvent}) {
   return {
@@ -42,14 +25,19 @@ export function updateIndex(index) {
 }
 
 export function fetchPhotos(dispatch) {
-  dispatch(photoRequest())
-  return async function () {
 
+  dispatch(dataRequest('PHOTO'))
+
+  return async function () {
     try {
       const payload = await userFeedPhotos()
-      return  dispatch(photoDataSuccess({data: payload.data}))
+      return  dispatch(dataSuccess({
+        data: payload.data
+      },
+      'PHOTO'
+      ))
     } catch (error) {
-      return dispatch(photoDataFailure(error))
+      return dispatch(dataFailure(error), 'PHOTO')
     }
   }
 }

@@ -11,8 +11,10 @@ export default App
 function App() {
   return (
     <View>
-      <Header/>
-      <ScrollView>
+      <ScrollView
+        pagingEnabled={true}
+        showsVerticalScrollIndicator={false}>
+        <Header/>
         <Swiper />
         <Grid />
       </ScrollView>

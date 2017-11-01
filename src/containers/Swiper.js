@@ -1,9 +1,11 @@
 import React                           from 'react'
 import {
-  Text,
-  StyleSheet,
-  View,
+  Animated,
+  Dimensions,
   FlatList,
+  StyleSheet,
+  Text,
+  View,
 }                                      from 'react-native'
 import {connect}                       from 'react-redux'
 
@@ -12,8 +14,10 @@ import {
   positionStart,
   positionEnd
 }                                      from '../actions/photos'
-import NavDots                         from '../components/navDots'
 import Photo                           from '../components/Photo'
+import NavDots                         from './NavDots'
+
+const { width } = Dimensions.get('window')
 
 function photoRender({item}) {
   return (
@@ -27,7 +31,10 @@ function Swiper({
   photos: {
     isNotStarted,
     isLoading,
-    data
+    data,
+    scrollX,
+    range,
+    index
   },
   getPhotos,
   updateStartPosition,
@@ -40,12 +47,27 @@ function Swiper({
   if(isLoading) {
     return <Text>Swiper</Text>
   }
+  console.log('index', index)
   return (
     <View style={styles.container}>
       <FlatList
+        ref={(ctx) => positionChange(ctx, index)}
         onScrollBeginDrag={updateStartPosition}
         onScrollEndDrag={updateEndPosition}
         horizontal={true}
+        initialScrollIndex={3}
+        getItemLayout={(data, index) => (
+          {length: width, offset: width * index, index}
+        )}
+        onScroll={Animated.event(
+          [{
+            nativeEvent: {
+              contentOffset: {
+                x: scrollX
+              }
+            }
+          }]
+        )}
         keyExtractor={item => item.objectId}
         pagingEnabled={true}
         showsHorizontalScrollIndicator={false}
@@ -57,7 +79,12 @@ function Swiper({
   )
 }
 
-
+function positionChange(ctx, index) {
+  if(ctx) {
+    console.log(ctx, index)
+    return ctx.initialScrollIndex = index
+  }
+}
 function mapState({photos}) {
   return {
     photos: photos
@@ -76,7 +103,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: 50,
   },
 })
 

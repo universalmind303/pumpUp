@@ -1,10 +1,16 @@
+import {Animated, Dimensions} from 'react-native'
 export default PhotoReducer
 
+const { width } = Dimensions.get('window')
+
+const scrollX = new Animated.Value(0)
 
 const photoState = {
   isNotStarted: true,
   isLoading: true,
   data: {},
+  scrollX: scrollX,
+  xPosition: Animated.divide(scrollX, width),
   position: {
     start: 0,
     end:0
@@ -17,6 +23,13 @@ const photoState = {
 function PhotoReducer(state=photoState, action) {
   console.log('reducer called')
   const handlers = {
+    'UPDATE_INDEX': () => {
+      console.log('updateIndex called')
+      return {
+        ...state,
+        index: action.index,
+      }
+    },
     'POSITION_START': () => {
       return {
         ...state,

@@ -1,25 +1,5 @@
-import {getUserProfile} from './service'
-
-export function userDataFailure(error) {
-  return {
-    type: 'USER_FETCH_ERROR',
-    error: error
-  }
-}
-
-export function userDataSuccess({data}) {
-  return {
-    type: 'USER_FETCH_DATA_SUCCESS',
-    data: data
-
-  }
-}
-
-export function userRequest() {
-  return {
-    type: 'USER_REQUEST'
-  }
-}
+import { dataFailure, dataSuccess, dataRequest } from './requests'
+import {getUserProfile}                          from './service'
 
 export function toggleBio() {
   return {
@@ -29,17 +9,19 @@ export function toggleBio() {
 
 export function fetchUser(dispatch) {
 
-  dispatch(userRequest())
-
+  dispatch(dataRequest('USER'))
   return async function () {
 
     try {
+
       const payload = await getUserProfile()
-      return  dispatch(userDataSuccess({
+
+      return  dispatch(dataSuccess({
         data: payload.data
-      }))
+      }, 'USER'))
+
     } catch (error) {
-      return dispatch(userDataFailure(error))
+      return dispatch(dataFailure(error), 'USER')
     }
   }
 }

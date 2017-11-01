@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux'
 
-import UserReducer from './user'
+import FeedReducer from './feed'
 import PhotoReducer from './photos'
+import UserReducer from './user'
 
 export default combineReducers({
+  feed: FeedReducer,
+  photos: PhotoReducer,
   user  : UserReducer,
-  photos: PhotoReducer
 })

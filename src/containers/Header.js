@@ -10,6 +10,8 @@ import { connect } from 'react-redux'
 
 import { fetchUser, toggleBio } from '../actions/user'
 
+export default connect(mapState, mapDispatch)(Header)
+
 const {height, width} = Dimensions.get('window')
 
 
@@ -22,7 +24,8 @@ function Header ( {
   },
   getUserProfile,
   toggleBio
-} ){
+})
+{
   if(isNotStarted) {
     getUserProfile()
   }
@@ -53,6 +56,18 @@ function Header ( {
   )
 }
 
+function mapState(state) {
+  return {
+    user: state.user
+  }
+}
+
+function mapDispatch(dispatch) {
+  return {
+    toggleBio: () => dispatch(toggleBio()),
+    getUserProfile: () => dispatch(fetchUser(dispatch))
+  }
+}
 // styles [CTRL+ENTER]
 
 const profileImageSize = height * 0.18
@@ -92,18 +107,3 @@ const styles = StyleSheet.create({
     color: 'red'
   },
 })
-
-function mapState(state) {
-  return {
-    user: state.user
-  }
-}
-
-function mapDispatch(dispatch) {
-  return {
-    toggleBio: () => dispatch(toggleBio()),
-    getUserProfile: () => dispatch(fetchUser(dispatch))
-  }
-}
-
-export default connect(mapState, mapDispatch)(Header)
