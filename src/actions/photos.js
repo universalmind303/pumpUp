@@ -1,28 +1,20 @@
 import { dataFailure, dataSuccess, dataRequest } from './requests'
 import { userFeedPhotos }                        from './service'
 
-import {Animated, Dimensions } from 'react-native'
-const { width } = Dimensions.get('window')
-
-export function positionStart({nativeEvent}) {
-  return {
-    type: 'POSITION_START',
-    start: nativeEvent.contentOffset.x
-  }
-}
-export function positionEnd({nativeEvent}) {
-  return {
-    type: 'POSITION_END',
-    end: nativeEvent.contentOffset.x
-  }
-}
-
 export function updateIndex(index) {
   return {
     type: 'UPDATE_INDEX',
     index: index
   }
 }
+
+export function updatePosition(position) {
+  return {
+    type: 'UPDATE_POSITION',
+    positionChange: position
+  }
+}
+
 
 export function fetchPhotos(dispatch) {
 
@@ -31,13 +23,16 @@ export function fetchPhotos(dispatch) {
   return async function () {
     try {
       const payload = await userFeedPhotos()
-      return  dispatch(dataSuccess({
-        data: payload.data
-      },
-      'PHOTO'
-      ))
+      if(payload.data) {
+        return  dispatch(dataSuccess({
+          data: payload.data
+        },
+        'PHOTO'
+        ))
+      }
+      throw new Error('no payload.data')
     } catch (error) {
-      return dispatch(dataFailure(error), 'PHOTO')
+      return dispatch(dataFailure(error, 'PHOTO'))
     }
   }
 }

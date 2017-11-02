@@ -1,10 +1,11 @@
-import React from 'react'
+import propTypes from 'prop-types'
+import React     from 'react'
 import {
   TouchableOpacity,
   Image,
   Dimensions,
   StyleSheet
-}            from 'react-native'
+}                from 'react-native'
 
 export default GridItem
 
@@ -30,3 +31,8 @@ const styles = StyleSheet.create({
     margin: margin,
   },
 })
+
+GridItem.propTypes = {
+  photo    : propTypes.object,
+  rowLength: propTypes.number
+}

@@ -1,0 +1,156 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`#fetchFeed should handle a bad request gracefully 1`] = `
+Array [
+  Object {
+    "type": "FEED_REQUEST",
+  },
+  Object {
+    "error": [Error: no payload.data],
+    "type": "FEED_FETCH_ERROR",
+  },
+]
+`;
+
+exports[`#fetchFeed should successfully add data to redux store  1`] = `
+Array [
+  Object {
+    "type": "FEED_REQUEST",
+  },
+  Object {
+    "data": Object {
+      "result": Object {
+        "posts": Array [
+          Object {
+            "__type": "Object",
+            "className": "Post",
+            "createdAt": "2017-11-02T17:17:49.648Z",
+            "objectId": 18560168,
+            "thumbnail": "https://d1m37qdzmw041i.cloudfront.net/photos/posts/thumbnails/18560168-1509643076395.jpg",
+          },
+          Object {
+            "__type": "Object",
+            "className": "Post",
+            "createdAt": "2017-11-02T17:07:42.182Z",
+            "objectId": 18560158,
+            "thumbnail": "https://d1m37qdzmw041i.cloudfront.net/photos/posts/thumbnails/18560158-1509642465713.jpg",
+          },
+          Object {
+            "__type": "Object",
+            "className": "Post",
+            "createdAt": "2017-11-02T16:59:52.959Z",
+            "objectId": 18560151,
+            "thumbnail": "https://d1m37qdzmw041i.cloudfront.net/photos/posts/thumbnails/18560151-1509641996318.jpg",
+          },
+          Object {
+            "__type": "Object",
+            "className": "Post",
+            "createdAt": "2017-11-02T16:42:29.261Z",
+            "objectId": 18560136,
+            "thumbnail": "https://d1m37qdzmw041i.cloudfront.net/photos/posts/thumbnails/18560136-1509640951354.jpg",
+          },
+          Object {
+            "__type": "Object",
+            "className": "Post",
+            "createdAt": "2017-11-02T16:40:01.462Z",
+            "objectId": 18560133,
+            "thumbnail": "https://d1m37qdzmw041i.cloudfront.net/photos/posts/thumbnails/18560133-1509640805874.jpg",
+          },
+          Object {
+            "__type": "Object",
+            "className": "Post",
+            "createdAt": "2017-11-02T16:21:27.894Z",
+            "objectId": 18560121,
+            "thumbnail": "https://d1m37qdzmw041i.cloudfront.net/photos/posts/thumbnails/18560121-1509639696607.jpg",
+          },
+          Object {
+            "__type": "Object",
+            "className": "Post",
+            "createdAt": "2017-11-02T16:17:48.400Z",
+            "objectId": 18560119,
+            "thumbnail": "https://d1m37qdzmw041i.cloudfront.net/photos/posts/thumbnails/18560119-1509639471327.jpg",
+          },
+          Object {
+            "__type": "Object",
+            "className": "Post",
+            "createdAt": "2017-11-02T16:03:02.687Z",
+            "objectId": 18560109,
+            "thumbnail": "https://d1m37qdzmw041i.cloudfront.net/photos/posts/thumbnails/18560109-1509638586192.jpg",
+          },
+          Object {
+            "__type": "Object",
+            "className": "Post",
+            "createdAt": "2017-11-02T15:56:13.266Z",
+            "objectId": 18560107,
+            "thumbnail": "https://d1m37qdzmw041i.cloudfront.net/photos/posts/thumbnails/18560107-1509638175781.jpg",
+          },
+          Object {
+            "__type": "Object",
+            "className": "Post",
+            "createdAt": "2017-11-02T15:49:52.766Z",
+            "objectId": 18560101,
+            "thumbnail": "https://d1m37qdzmw041i.cloudfront.net/photos/posts/thumbnails/18560101-1509637796408.jpg",
+          },
+          Object {
+            "__type": "Object",
+            "className": "Post",
+            "createdAt": "2017-11-02T15:30:24.515Z",
+            "objectId": 18560081,
+            "thumbnail": "https://d1m37qdzmw041i.cloudfront.net/photos/posts/thumbnails/18560081-1509636631287.jpg",
+          },
+          Object {
+            "__type": "Object",
+            "className": "Post",
+            "createdAt": "2017-11-02T15:30:01.132Z",
+            "objectId": 18560080,
+            "thumbnail": "https://d1m37qdzmw041i.cloudfront.net/photos/posts/thumbnails/18560080-1509636606168.jpg",
+          },
+          Object {
+            "__type": "Object",
+            "className": "Post",
+            "createdAt": "2017-11-02T15:24:10.082Z",
+            "objectId": 18560071,
+            "thumbnail": "https://d1m37qdzmw041i.cloudfront.net/photos/posts/thumbnails/18560071-1509636251673.jpg",
+          },
+          Object {
+            "__type": "Object",
+            "className": "Post",
+            "createdAt": "2017-11-02T15:07:39.927Z",
+            "objectId": 18560061,
+            "thumbnail": "https://d1m37qdzmw041i.cloudfront.net/photos/posts/thumbnails/18560061-1509635261594.jpg",
+          },
+          Object {
+            "__type": "Object",
+            "className": "Post",
+            "createdAt": "2017-11-02T14:59:35.485Z",
+            "objectId": 18560057,
+            "thumbnail": "https://d1m37qdzmw041i.cloudfront.net/photos/posts/thumbnails/18560057-1509634780989.jpg",
+          },
+          Object {
+            "__type": "Object",
+            "className": "Post",
+            "createdAt": "2017-11-02T14:54:09.895Z",
+            "objectId": 18560053,
+            "thumbnail": "https://d1m37qdzmw041i.cloudfront.net/photos/posts/thumbnails/18560053-1509634451544.jpg",
+          },
+          Object {
+            "__type": "Object",
+            "className": "Post",
+            "createdAt": "2017-11-02T14:36:43.558Z",
+            "objectId": 18560038,
+            "thumbnail": "https://d1m37qdzmw041i.cloudfront.net/photos/posts/thumbnails/18560038-1509633406548.jpg",
+          },
+          Object {
+            "__type": "Object",
+            "className": "Post",
+            "createdAt": "2017-11-02T14:20:36.195Z",
+            "objectId": 18560032,
+            "thumbnail": "https://d1m37qdzmw041i.cloudfront.net/photos/posts/thumbnails/18560032-1509632441326.jpg",
+          },
+        ],
+      },
+    },
+    "type": "FEED_FETCH_DATA_SUCCESS",
+  },
+]
+`;

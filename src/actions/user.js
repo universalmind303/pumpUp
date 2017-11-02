@@ -15,13 +15,16 @@ export function fetchUser(dispatch) {
     try {
 
       const payload = await getUserProfile()
-
-      return  dispatch(dataSuccess({
-        data: payload.data
-      }, 'USER'))
-
+      if(payload.data) {
+        return  dispatch(dataSuccess({
+          data: payload.data
+        },
+        'USER'
+        ))
+      }
+      throw new Error('no payload.data')
     } catch (error) {
-      return dispatch(dataFailure(error), 'USER')
+      return dispatch(dataFailure(error, 'USER'))
     }
   }
 }

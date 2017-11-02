@@ -1,12 +1,13 @@
-import React from 'react'
+import propTypes                from 'prop-types'
+import React                    from 'react'
 import { Text,
   View,
   StyleSheet,
   TouchableOpacity,
   ScrollView,
   Dimensions,
-  Image }    from 'react-native'
-import { connect } from 'react-redux'
+  Image }                       from 'react-native'
+import { connect }              from 'react-redux'
 
 import { fetchUser, toggleBio } from '../actions/user'
 
@@ -14,12 +15,16 @@ export default connect(mapState, mapDispatch)(Header)
 
 const {height, width} = Dimensions.get('window')
 
-
 function Header ( {
   user: {
     isNotStarted,
     isLoading,
-    data,
+    data: {
+      name,
+      bio,
+      profileInfo,
+      profileThumbnail
+    },
     bioToggle
   },
   getUserProfile,
@@ -40,14 +45,14 @@ function Header ( {
     <ScrollView>
       <View style={styles.topBorder} />
       <View style={[styles.header, {height: bioToggle ? height : height * 0.2}]}>
-        <View style={{flex: 1, flexDirection: 'row'}}>
-          <Image source={{uri: data.profileThumbnail}} style={styles.profileImage}/>
+        <View style={styles.row}>
+          <Image source={{uri: profileThumbnail}} style={styles.profileImage}/>
           <View style={styles.profileInfo}>
-            <Text style={styles.userName}>{data.name.toUpperCase()}</Text>
+            <Text style={styles.userName}>{name.toUpperCase()}</Text>
             <TouchableOpacity onPress={toggleBio}>
               <Text>{!bioToggle
-                ? data.bio.split('\n').slice(0,2)
-                : data.bio} ...read {bioToggle ? 'less' : 'more'}</Text>
+                ? bio.split('\n').slice(0,2)
+                : bio} ...read {bioToggle ? 'less' : 'more'}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -72,38 +77,44 @@ function mapDispatch(dispatch) {
 
 const profileImageSize = height * 0.18
 const styles = StyleSheet.create({
-  profileImage: {
-    marginTop: 5,
-    marginLeft: 5,
-    height: profileImageSize,
-    width: profileImageSize,
-    borderRadius: profileImageSize / 2,
-    paddingRight: 20,
+  header: {
+    borderBottomColor: null,
+    borderColor      : 'transparent',
+    backgroundColor  : '#d1c4e9',
+    flexDirection    : 'row',
   },
   profileInfo: {
-    marginTop: height * 0.05,
-    paddingLeft:20,
-    width : width -  profileImageSize,
-    flexWrap: 'wrap',
-    alignItems: 'flex-start',
+    alignItems   : 'flex-start',
     flexDirection:'row',
+    flexWrap     : 'wrap',
+    marginTop    : height * 0.05,
+    paddingLeft  : 20,
+    width        : width -  profileImageSize,
+  },
+  profileImage: {
+    borderRadius: profileImageSize / 2,
+    height      : profileImageSize,
+    marginLeft  : 5,
+    marginTop   : 5,
+    paddingRight: 20,
+    width       : profileImageSize,
+  },
+  row: {
+    flex         : 1,
+    flexDirection: 'row'
   },
   topBorder: {
-    height: height * 0.02,
-    backgroundColor: '#a094b7'
+    backgroundColor: '#a094b7',
+    height         : height * 0.02,
   },
   userName: {
+    fontSize  : 15,
     fontWeight: 'bold',
-    fontSize: 15,
-  },
-  header: {
-    flexDirection: 'row',
-    elevation: 8,
-    borderBottomColor: null,
-    borderColor: 'transparent',
-    backgroundColor: '#d1c4e9',
-  },
-  color: {
-    color: 'red'
   },
 })
+
+Header.propTypes = {
+  getUserProfile: propTypes.func,
+  toggleBio     : propTypes.func,
+  user          : propTypes.object,
+}

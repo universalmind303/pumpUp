@@ -1,4 +1,5 @@
-import React                           from 'react'
+import propTypes       from 'prop-types'
+import React           from 'react'
 import {
   Animated,
   Dimensions,
@@ -6,16 +7,13 @@ import {
   StyleSheet,
   Text,
   View,
-}                                      from 'react-native'
-import {connect}                       from 'react-redux'
+}                      from 'react-native'
+import {connect}       from 'react-redux'
 
-import {
-  fetchPhotos,
-  positionStart,
-  positionEnd
-}                                      from '../actions/photos'
-import Photo                           from '../components/Photo'
-import NavDots                         from './NavDots'
+import { fetchPhotos } from '../actions/photos'
+import Photo           from '../components/Photo'
+import NavDots         from './NavDots'
+
 
 const { width } = Dimensions.get('window')
 
@@ -27,85 +25,108 @@ function photoRender({item}) {
   )
 }
 
-function Swiper({
-  photos: {
-    isNotStarted,
-    isLoading,
-    data,
-    scrollX,
-    range,
-    index
-  },
-  getPhotos,
-  updateStartPosition,
-  updateEndPosition
-})
-{
-  if(isNotStarted){
-    getPhotos()
+
+class Swiper extends React.Component {
+  constructor(props) {
+    super(props)
   }
-  if(isLoading) {
-    return <Text>Swiper</Text>
+
+  componentDidUpdate() {
+    const {
+      photos: {
+        index
+      }
+    } = this.props
+
+    if(this._FlatList) {
+
+      this._FlatList.scrollToIndex({
+        animated: true,
+        index: index
+      })
+    }
   }
-  console.log('index', index)
-  return (
-    <View style={styles.container}>
-      <FlatList
-        ref={(ctx) => positionChange(ctx, index)}
-        onScrollBeginDrag={updateStartPosition}
-        onScrollEndDrag={updateEndPosition}
-        horizontal={true}
-        initialScrollIndex={3}
-        getItemLayout={(data, index) => (
-          {length: width, offset: width * index, index}
-        )}
-        onScroll={Animated.event(
-          [{
-            nativeEvent: {
+  render () {
+    const {
+      photos: {
+        isNotStarted,
+        isLoading
+      },
+      getPhotos
+    } = this.props
+    if(isNotStarted){
+      getPhotos()
+    }
+    if(isLoading) {
+      return <Text>Swiper</Text>
+    }
+    const {
+      photos: {
+        data,
+        scrollX,
+      }
+    } = this.props
+    return (
+      <View style={styles.container}>
+        <FlatList
+          ref={ref => {this._FlatList = ref}}
+          horizontal={true}
+          getItemLayout={(data, index) => (
+            {
+              length: width,
+              offset: width * index,
+              index
+            }
+          )}
+          onScroll={Animated.event(
+            [{ nativeEvent: {
               contentOffset: {
                 x: scrollX
               }
-            }
-          }]
-        )}
-        keyExtractor={item => item.objectId}
-        pagingEnabled={true}
-        showsHorizontalScrollIndicator={false}
-        data={data.result.posts}
-        renderItem={photoRender}
-      />
-      <NavDots photos={data.result.posts} />
-    </View>
-  )
-}
+            }}]
+          )}
+          keyExtractor={item => item.objectId}
+          pagingEnabled={true}
+          showsHorizontalScrollIndicator={false}
+          data={data.result.posts}
+          renderItem={photoRender}
+        />
+        <NavDots photos={data.result.posts} />
+      </View>
+    )
 
-function positionChange(ctx, index) {
-  if(ctx) {
-    console.log(ctx, index)
-    return ctx.initialScrollIndex = index
   }
 }
+
+
 function mapState({photos}) {
   return {
-    photos: photos
+    photos: photos,
   }
 }
 
 function mapDispatch(dispatch) {
   return {
-    getPhotos: () => dispatch(fetchPhotos(dispatch)),
-    updateStartPosition: ctx => dispatch(positionStart(ctx)),
-    updateEndPosition: ctx => dispatch(positionEnd(ctx))
+    getPhotos: () => dispatch(fetchPhotos(dispatch))
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 50,
+    alignItems     : 'center',
+    flex           : 1,
+    justifyContent : 'center',
+    marginBottom   : 50,
   },
 })
 
+Swiper.propTypes = {
+  photos   : propTypes.object,
+  getPhotos: propTypes.func,
+}
+
+
+photoRender.propTypes = {
+  item: propTypes.object,
+}
 export default connect(mapState, mapDispatch)(Swiper)

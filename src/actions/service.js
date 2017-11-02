@@ -9,9 +9,9 @@ const sessionToken = [
 export async function getUserProfile() {
 
   const payload = await axios.post('http://api.pumpup.com/1/classes/User/318381 ', {
-    '_method': 'GET',
-    '_version': '5.0.5',
-    '_SessionToken': sessionToken
+    '_method'      : 'GET',
+    '_SessionToken': sessionToken,
+    '_version'     : '5.0.5',
   })
 
   return payload
@@ -20,12 +20,12 @@ export async function getUserProfile() {
 export async function userFeedPhotos() {
 
   const payload = axios.post('http://api.pumpup.com/1/functions/feed/profile/load-batch', {
+    '_method'         : 'POST',
+    '_SessionToken'   : sessionToken,
+    '_version'        : '5.0.5',
     'isThumbnailsOnly': true,
-    'limit': 5,
-    'userId': 2707798,
-    '_method': 'POST',
-    '_version': '5.0.5',
-    '_SessionToken': sessionToken
+    'limit'           : 5,
+    'userId'          : 2707798,
   })
 
   return payload
@@ -34,11 +34,11 @@ export async function userFeedPhotos() {
 export async function popularFeedPhotos() {
 
   const payload = axios.post('http://api.pumpup.com/1/functions/feed/popular/load-batch',{
+    '_method'         : 'POST',
+    '_version'        : '5.0.5',
+    '_SessionToken'   : sessionToken,
     'isThumbnailsOnly': true,
-    'limit': 18,
-    '_method': 'POST',
-    '_version': '5.0.5',
-    '_SessionToken': sessionToken
+    'limit'           : 18,
   })
 
   return payload

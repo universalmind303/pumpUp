@@ -20,12 +20,12 @@ function FeedReducer(state=feedState, action) {
       isLoading:false,
       data: action.data
     }),
-    'FEED_FETCH_DATA_FAILUER': () => ({
+    'FEED_FETCH_ERROR': () => ({
       ...state,
       isLoading:false,
       data: action.error
     }),
   }
 
-  return handlers[action.type] ? handlers[action.type]() : state
+  return action && handlers[action.type] ? handlers[action.type]() : state
 }

@@ -1,3 +1,4 @@
+import propTypes     from 'prop-types'
 import React         from 'react'
 import {
   Text,
@@ -13,7 +14,6 @@ import GridItem      from '../components/GridItem'
 export default connect(mapState, mapDispatch)(Grid)
 
 const IMAGES_PER_ROW = 3
-
 
 function Grid({
   feed: {
@@ -73,7 +73,12 @@ function mapDispatch(dispatch) {
 
 const styles = StyleSheet.create({
   rowContainer: {
-    flex:1,
+    flex         :1,
     flexDirection: 'row',
   }
 })
+
+Grid.propTypes = {
+  feed   : propTypes.object,
+  getFeed: propTypes.func
+}

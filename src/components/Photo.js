@@ -1,10 +1,11 @@
-import React from 'react'
+import propTypes from 'prop-types'
+import React     from 'react'
 import {
   View,
   Image,
   Dimensions,
   StyleSheet
-}            from 'react-native'
+}                from 'react-native'
 
 export default Photo
 
@@ -26,6 +27,11 @@ const styles = StyleSheet.create({
   },
   image: {
     height: width,
-    width: width * 0.95,
+    width : width * 0.95,
   },
 })
+
+
+Photo.propTypes = {
+  photo: propTypes.object
+}
