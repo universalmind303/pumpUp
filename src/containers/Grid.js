@@ -1,15 +1,15 @@
-import propTypes     from 'prop-types'
-import React         from 'react'
+import propTypes   from 'prop-types'
+import React       from 'react'
 import {
   Text,
   StyleSheet,
   View,
-}                    from 'react-native'
-import {connect}     from 'react-redux'
+}                  from 'react-native'
+import { connect } from 'react-redux'
 
-import { chunk }     from '../utils'
-import { fetchFeed } from '../actions/feed'
-import GridItem      from '../components/GridItem'
+import { splitIntoSubArrays }     from '../utils'
+import { fetchFeed }              from '../actions/feed'
+import GridItem                   from '../components/GridItem'
 
 export default connect(mapState, mapDispatch)(Grid)
 
@@ -31,15 +31,18 @@ function Grid({
   if(isLoading) {
     return <Text>Loading</Text>
   }
+
   const photos = data.result.posts
-  const chunks = chunk(photos, IMAGES_PER_ROW)
+  const arrayOfArrays = splitIntoSubArrays(photos, IMAGES_PER_ROW)
+
   return (
     <View>
-      {chunks.map(gridRow)}
+      {arrayOfArrays.map(gridRow)}
     </View>
   )
 }
 
+// a wrapper for our GridItem to play nicely with Array.prototype.map
 function gridPhoto(item) {
   return (
     <GridItem
@@ -49,6 +52,7 @@ function gridPhoto(item) {
   )
 }
 
+// Takes an array of arrays and maps them to sub arrays to form our grid
 function gridRow(row, i) {
   return (
     <View key={i}

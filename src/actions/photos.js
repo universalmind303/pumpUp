@@ -1,6 +1,10 @@
 import { dataFailure, dataSuccess, dataRequest } from './requests'
 import { userFeedPhotos }                        from './service'
 
+
+/* updates the index based off user input
+ * index refers to the current photo of photo swiper
+*/
 export function updateIndex(index) {
   return {
     type: 'UPDATE_INDEX',
@@ -8,14 +12,10 @@ export function updateIndex(index) {
   }
 }
 
-export function updatePosition(position) {
-  return {
-    type: 'UPDATE_POSITION',
-    positionChange: position
-  }
-}
-
-
+/* dispatches loading status to state -
+ * dispatches the response: either fail or success based off api response
+ * SEE: './service for more details'
+*/
 export function fetchPhotos(dispatch) {
 
   dispatch(dataRequest('PHOTO'))

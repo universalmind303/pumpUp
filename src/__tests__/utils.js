@@ -1,6 +1,6 @@
-import {chunk} from '../utils'
+import { splitIntoSubArrays } from '../utils'
 
-describe('chunk', function () {
+describe('splitIntoSubArrays', function () {
 
   it('should split an array into equal parts based off argument n', function() {
 
@@ -8,7 +8,7 @@ describe('chunk', function () {
     const n              = 3
     const expectedLength =  Math.ceil(i / n)
     const arr            = [...Array(i)]
-    const splitby3       = chunk(arr, n)
+    const splitby3       = splitIntoSubArrays(arr, n)
 
 
     expect(splitby3.length).toEqual(expectedLength)
@@ -18,7 +18,7 @@ describe('chunk', function () {
   it('should not mutate original array', function() {
 
     const arr      = [1,2,3,4,5,6,7,8,9]
-    const splitby5 = chunk(arr, 5)
+    const splitby5 = splitIntoSubArrays(arr, 5)
 
     expect(arr).toEqual(expect.arrayContaining([1,2,3,4,5,6,7,8,9]))
     expect(arr).not.toEqual(splitby5)

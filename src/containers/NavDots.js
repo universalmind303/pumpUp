@@ -1,12 +1,12 @@
-import propTypes        from 'prop-types'
-import React            from 'react'
+import propTypes   from 'prop-types'
+import React       from 'react'
 import {
   View,
   TouchableOpacity,
   Animated,
   StyleSheet,
-} from 'react-native'
-import { connect }      from 'react-redux'
+}                  from 'react-native'
+import { connect } from 'react-redux'
 
 import { updateIndex }  from '../actions/photos'
 import { selectorTest } from '../selectors/photos'

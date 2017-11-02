@@ -1,7 +1,7 @@
 import propTypes from 'prop-types'
 import React     from 'react'
 import {
-  TouchableOpacity,
+  View,
   Image,
   Dimensions,
   StyleSheet
@@ -12,17 +12,23 @@ export default GridItem
 const { width } = Dimensions.get('window')
 const margin    = width * 0.002
 
+
+
+
+// GridItem refers to individual photos in the photo grid
 function GridItem({photo, rowLength}) {
-  const imageWidth  = (width  / rowLength) - (margin * rowLength)
+
+  const imageWidth  = ( width  / rowLength ) - ( margin * rowLength )
   const imageHeight = width / rowLength
+
   return (
-    <TouchableOpacity
-      onPress={()=> console.log('enlarge')}
-      style={styles.border}>
-      <Image
-        source={{uri: photo.thumbnail}}
-        style={{height: imageHeight, width: imageWidth}} />
-    </TouchableOpacity>
+    <Image
+      source={{uri: photo.thumbnail}}
+      style={{
+        margin: margin,
+        height: imageHeight,
+        width: imageWidth
+      }} />
   )
 }
 

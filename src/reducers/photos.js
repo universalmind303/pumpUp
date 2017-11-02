@@ -1,43 +1,38 @@
-import {Animated, Dimensions} from 'react-native'
+import { Animated, Dimensions } from 'react-native'
 export default PhotoReducer
 
-const { width }  = Dimensions.get('window')
-const scrollX    = new Animated.Value(0)
-const photoState = {
+const { width }   = Dimensions.get('window')
+const scrollX     = new Animated.Value(0)
+const PHOTO_STATE = {
   data        : {},
   index       : 0,
   isLoading   : true,
   isNotStarted: true,
-  range       : 0,
   scrollX     : scrollX,
   xPosition   : Animated.divide(scrollX, width),
 }
 
 
-function PhotoReducer(state=photoState, action) {
+function PhotoReducer(state=PHOTO_STATE, action) {
   const handlers = {
-    'UPDATE_INDEX': () => {
-      return {
-        ...state,
-        index: action.index,
-      }
-    },
-
+    'UPDATE_INDEX': () => ({
+      ...state,
+      index: typeof(action.index) === 'number' ? action.index : state.index,
+    }),
     'PHOTO_REQUEST': () => ({
       ...state,
+      isLoading: true,
       isNotStarted: false,
-      isLoading: true
     }),
     'PHOTO_FETCH_ERROR': () => ({
       ...state,
+      error     : action.error,
       isLoading:false,
-      data     : action.error,
     }),
     'PHOTO_FETCH_DATA_SUCCESS': () => ({
       ...state,
-      isLoading:false,
       data     : action.data,
-      range    : action.data.result.posts.length
+      isLoading: false,
     }),
   }
   return action && handlers[action.type] ? handlers[action.type]() : state

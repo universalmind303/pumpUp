@@ -4,9 +4,9 @@ import thunk          from 'redux-thunk'
 import * as actions   from '../feed'
 
 
-const service     = require('../service')
 const middlewares = [thunk]
 const mockStore   = configureStore(middlewares)
+const service     = require('../service')
 
 describe('#fetchFeed', () => {
 

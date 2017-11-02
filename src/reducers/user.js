@@ -24,7 +24,7 @@ function UserReducer(state=userState, action) {
     'USER_FETCH_ERROR': () => ({
       ...state,
       isLoading:false,
-      data     : action.error,
+      error     : action.error,
     }),
     'TOGGLE_BIO': () => ({
       ...state,

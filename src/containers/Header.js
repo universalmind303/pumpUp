@@ -1,13 +1,13 @@
-import propTypes                from 'prop-types'
-import React                    from 'react'
+import propTypes   from 'prop-types'
+import React       from 'react'
 import { Text,
   View,
   StyleSheet,
   TouchableOpacity,
   ScrollView,
   Dimensions,
-  Image }                       from 'react-native'
-import { connect }              from 'react-redux'
+  Image }          from 'react-native'
+import { connect } from 'react-redux'
 
 import { fetchUser, toggleBio } from '../actions/user'
 

@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">88.89% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>8/9</span>
+        <span class='fraction'>9/9</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>3/3</span>
+        <span class='fraction'>7/7</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">75% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>3/4</span>
+        <span class='fraction'>5/5</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">88.89% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>8/9</span>
+        <span class='fraction'>9/9</span>
       </div>
     </div>
   </div>
@@ -82,20 +82,12 @@
 37
 38
 39
-40
-41
-42
-43
-44
-45
-46</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+40</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -106,20 +98,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -130,53 +119,46 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {Animated, Dimensions} from 'react-native'
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Animated, Dimensions } from 'react-native'
 export default PhotoReducer
 &nbsp;
-const { width } = Dimensions.get('window')
-&nbsp;
-const scrollX = new Animated.Value(0)
-&nbsp;
-const photoState = {
+const { width }   = Dimensions.get('window')
+const scrollX     = new Animated.Value(0)
+const PHOTO_STATE = {
+  data        : {},
+  index       : 0,
+  isLoading   : true,
   isNotStarted: true,
-  isLoading: true,
-  data: {},
-&nbsp;
-  // move these to selectors
-  scrollX: scrollX,
-  xPosition: Animated.divide(scrollX, width),
-  // 
-  index: 0,
-  range: 0
+  scrollX     : scrollX,
+  xPosition   : Animated.divide(scrollX, width),
 }
 &nbsp;
 &nbsp;
-function PhotoReducer(state=photoState, action) {
-  console.log('reducer called')
+function PhotoReducer(state=PHOTO_STATE, action) {
   const handlers = {
-    'UPDATE_INDEX': <span class="fstat-no" title="function not covered" >()</span> =&gt; {
-<span class="cstat-no" title="statement not covered" >      return {</span>
-        ...state,
-        index: action.index,
-      }
-    },
-&nbsp;
+    'UPDATE_INDEX': () =&gt; ({
+      ...state,
+      index: typeof(action.index) === 'number' ? action.index : state.index,
+    }),
     'PHOTO_REQUEST': () =&gt; ({
       ...state,
+      isLoading: true,
       isNotStarted: false,
-      isLoading: true
+    }),
+    'PHOTO_FETCH_ERROR': () =&gt; ({
+      ...state,
+      error     : action.error,
+      isLoading:false,
     }),
     'PHOTO_FETCH_DATA_SUCCESS': () =&gt; ({
       ...state,
-      isLoading:false,
-      data: action.data,
-      range: action.data.result.posts.length
+      data     : action.data,
+      isLoading: false,
     }),
   }
-  return handlers[action.type] ? handlers[action.type]() : state
+  return action &amp;&amp; handlers[action.type] ? handlers[action.type]() : state
 }
 &nbsp;</pre></td></tr>
 </table></pre>
@@ -184,7 +166,7 @@ function PhotoReducer(state=photoState, action) {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Nov 02 2017 13:16:33 GMT-0500 (CDT)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Nov 02 2017 14:54:53 GMT-0500 (CDT)
 </div>
 </div>
 <script src="../../../prettify.js"></script>

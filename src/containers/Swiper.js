@@ -1,5 +1,5 @@
-import propTypes       from 'prop-types'
-import React           from 'react'
+import propTypes   from 'prop-types'
+import React       from 'react'
 import {
   Animated,
   Dimensions,
@@ -7,8 +7,8 @@ import {
   StyleSheet,
   Text,
   View,
-}                      from 'react-native'
-import {connect}       from 'react-redux'
+}                  from 'react-native'
+import { connect } from 'react-redux'
 
 import { fetchPhotos } from '../actions/photos'
 import Photo           from '../components/Photo'
@@ -17,6 +17,8 @@ import NavDots         from './NavDots'
 
 const { width } = Dimensions.get('window')
 
+
+// a wrapper for our Photo to play nicely with Array.prototype.map
 function photoRender({item}) {
   return (
     <Photo
@@ -31,6 +33,10 @@ class Swiper extends React.Component {
     super(props)
   }
 
+
+  /* if the state updated, check to see if the index was updated from user clicking on navigation dots
+   * if navigation dots changed the index, update the current position to match
+  */
   componentDidUpdate() {
     const {
       photos: {
@@ -46,6 +52,7 @@ class Swiper extends React.Component {
       })
     }
   }
+
   render () {
     const {
       photos: {
@@ -54,18 +61,22 @@ class Swiper extends React.Component {
       },
       getPhotos
     } = this.props
+
     if(isNotStarted){
       getPhotos()
     }
+
     if(isLoading) {
       return <Text>Swiper</Text>
     }
+
     const {
       photos: {
         data,
         scrollX,
       }
     } = this.props
+
     return (
       <View style={styles.container}>
         <FlatList
@@ -125,8 +136,8 @@ Swiper.propTypes = {
   getPhotos: propTypes.func,
 }
 
-
 photoRender.propTypes = {
   item: propTypes.object,
 }
+
 export default connect(mapState, mapDispatch)(Swiper)

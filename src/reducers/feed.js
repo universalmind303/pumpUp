@@ -1,29 +1,29 @@
 export default FeedReducer
 
 
-const feedState = {
+const FEED_STATE = {
+  data        : {},
+  isLoading   : true,
   isNotStarted: true,
-  isLoading: true,
-  data: {},
 }
 
 
-function FeedReducer(state=feedState, action) {
+function FeedReducer(state=FEED_STATE, action) {
   const handlers = {
     'FEED_REQUEST': () => ({
       ...state,
+      isLoading   : true,
       isNotStarted: false,
-      isLoading: true
     }),
     'FEED_FETCH_DATA_SUCCESS': () => ({
       ...state,
+      data     : action.data,
       isLoading:false,
-      data: action.data
     }),
     'FEED_FETCH_ERROR': () => ({
       ...state,
+      error     : action.error,
       isLoading:false,
-      data: action.error
     }),
   }
 
