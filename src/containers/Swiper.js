@@ -5,7 +5,7 @@ import {
   Dimensions,
   FlatList,
   StyleSheet,
-  Text,
+  ActivityIndicator,
   View,
 }                  from 'react-native'
 import { connect } from 'react-redux'
@@ -14,20 +14,11 @@ import { fetchPhotos } from '../actions/photos'
 import Photo           from '../components/Photo'
 import NavDots         from './NavDots'
 
-
 const { width } = Dimensions.get('window')
 
-
-// a wrapper for our Photo to play nicely with Array.prototype.map
-function photoRender({item}) {
-  return (
-    <Photo
-      photo={item}
-      key={item.objectId}/>
-  )
-}
-
-
+/*
+* Slider Component with data loaded from API
+*/
 class Swiper extends React.Component {
   constructor(props) {
     super(props)
@@ -64,10 +55,15 @@ class Swiper extends React.Component {
 
     if(isNotStarted){
       getPhotos()
+      return (
+        <ActivityIndicator />
+      )
     }
 
     if(isLoading) {
-      return <Text>Swiper</Text>
+      return (
+        <ActivityIndicator />
+      )
     }
 
     const {
@@ -107,7 +103,33 @@ class Swiper extends React.Component {
     )
 
   }
+
 }
+Swiper.propTypes = {
+  photos   : propTypes.object,
+  getPhotos: propTypes.func,
+}
+
+// a wrapper for our Photo to play nicely with Array.prototype.map
+function photoRender({item}) {
+  return (
+    <Photo
+      photo={item}
+      key={item.objectId}/>
+  )
+}
+photoRender.propTypes = {
+  item: propTypes.object,
+}
+
+
+
+////////////////////////
+// State and Dispatch //
+////////////////////////
+
+
+
 
 
 function mapState({photos}) {
@@ -122,6 +144,16 @@ function mapDispatch(dispatch) {
   }
 }
 
+
+
+////////////
+// STYLES //
+////////////
+
+
+
+
+
 const styles = StyleSheet.create({
   container: {
     alignItems     : 'center',
@@ -131,13 +163,7 @@ const styles = StyleSheet.create({
   },
 })
 
-Swiper.propTypes = {
-  photos   : propTypes.object,
-  getPhotos: propTypes.func,
-}
 
-photoRender.propTypes = {
-  item: propTypes.object,
-}
 
+// this export had to be put at bottom because it is a class.
 export default connect(mapState, mapDispatch)(Swiper)

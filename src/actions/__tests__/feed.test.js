@@ -10,13 +10,16 @@ const service     = require('../service')
 
 describe('#fetchFeed', () => {
 
+
   beforeEach(function () {
     jest.resetModules()
   })
 
   it('should handle a good request gracefully', async function() {
+
     const store = mockStore({})
     const actionResponse = await store.dispatch(actions.fetchFeed(store.dispatch))
+    
     expect(actionResponse.type).toEqual('FEED_FETCH_DATA_SUCCESS')
   })
 

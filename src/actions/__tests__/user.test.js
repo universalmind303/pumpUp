@@ -39,14 +39,15 @@ describe('#toggleBio', function () {
   it('should return an actionResponse with propertys of ', function() {
 
     const actionResponse = actions.toggleBio(1)
+
     expect(actionResponse).toHaveProperty('type')
 
   })
   it('should return an action response with type:TOGGLE_BIO ', function () {
 
     const actionResponse = actions.toggleBio(1)
+
     expect(actionResponse.type).toEqual('TOGGLE_BIO')
 
   })
-
 })

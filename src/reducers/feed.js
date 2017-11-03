@@ -7,7 +7,9 @@ const FEED_STATE = {
   isNotStarted: true,
 }
 
-
+/*
+* Reducer for Grid Photos
+*/
 function FeedReducer(state=FEED_STATE, action) {
   const handlers = {
     'FEED_REQUEST': () => ({

@@ -9,10 +9,13 @@ export function toggleBio() {
   }
 }
 
-/* dispatches loading status to state -
- * dispatches the response: either fail or success based off api response
- * SEE: './service for more details'
-*/
+/**
+ * [ dispatches loading status to state -
+ *  dispatches the response: either fail or success based off api response
+ *  SEE: './service for more details' ]
+ * @param  {Function} dispatch [Redux; store.dispatch]
+ * @return {Function}          [async () => store.dispatch(dataSuccess|dataFailure)]
+ */
 export function fetchUser(dispatch) {
 
   dispatch(dataRequest('USER'))
@@ -22,6 +25,7 @@ export function fetchUser(dispatch) {
     try {
 
       const payload = await getUserProfile()
+
       if(payload.data) {
         return  dispatch(dataSuccess({
           data: payload.data
@@ -31,6 +35,7 @@ export function fetchUser(dispatch) {
       }
       throw new Error('no payload.data')
     } catch (error) {
+
       return dispatch(dataFailure(error, 'USER'))
     }
   }

@@ -12,7 +12,9 @@ const PHOTO_STATE = {
   xPosition   : Animated.divide(scrollX, width),
 }
 
-
+/*
+* Reducer for Slider Photos 
+*/
 function PhotoReducer(state=PHOTO_STATE, action) {
   const handlers = {
     'UPDATE_INDEX': () => ({

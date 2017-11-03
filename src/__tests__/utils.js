@@ -10,9 +10,7 @@ describe('splitIntoSubArrays', function () {
     const arr            = [...Array(i)]
     const splitby3       = splitIntoSubArrays(arr, n)
 
-
     expect(splitby3.length).toEqual(expectedLength)
-
   })
 
   it('should not mutate original array', function() {
@@ -23,5 +21,4 @@ describe('splitIntoSubArrays', function () {
     expect(arr).toEqual(expect.arrayContaining([1,2,3,4,5,6,7,8,9]))
     expect(arr).not.toEqual(splitby5)
   })
-
 })

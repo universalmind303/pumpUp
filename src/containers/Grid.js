@@ -1,8 +1,8 @@
 import propTypes   from 'prop-types'
 import React       from 'react'
 import {
-  Text,
   StyleSheet,
+  ActivityIndicator,
   View,
 }                  from 'react-native'
 import { connect } from 'react-redux'
@@ -26,10 +26,10 @@ function Grid({
 {
   if(isNotStarted) {
     getFeed()
-    return <Text>Loading</Text>
+    return <ActivityIndicator />
   }
   if(isLoading) {
-    return <Text>Loading</Text>
+    return <ActivityIndicator />
   }
 
   const photos = data.result.posts
@@ -40,27 +40,27 @@ function Grid({
       {arrayOfArrays.map(gridRow)}
     </View>
   )
+  // a wrapper for our GridItem to play nicely with Array.prototype.map
+  function gridPhoto(item) {
+    return (
+      <GridItem
+        photo={item}
+        rowLength={IMAGES_PER_ROW}
+        key={item.objectId}/>
+    )
+  }
+
+  // Takes an array of arrays and maps them to sub arrays to form our grid
+  function gridRow(row, i) {
+    return (
+      <View key={i}
+        style={styles.rowContainer}>
+        {row.map(gridPhoto)}
+      </View>
+    )
+  }
 }
 
-// a wrapper for our GridItem to play nicely with Array.prototype.map
-function gridPhoto(item) {
-  return (
-    <GridItem
-      photo={item}
-      rowLength={IMAGES_PER_ROW}
-      key={item.objectId}/>
-  )
-}
-
-// Takes an array of arrays and maps them to sub arrays to form our grid
-function gridRow(row, i) {
-  return (
-    <View key={i}
-      style={styles.rowContainer}>
-      {row.map(gridPhoto)}
-    </View>
-  )
-}
 
 function mapState({feed}) {
   return {

@@ -2,9 +2,11 @@ import { dataFailure, dataSuccess, dataRequest } from './requests'
 import { userFeedPhotos }                        from './service'
 
 
-/* updates the index based off user input
- * index refers to the current photo of photo swiper
-*/
+/**
+ * [updateIndex]
+ * @param  {Number} index [current index of photo or navigation dot in slider]
+ * @return {Object}       [action creator for redux store]
+ */
 export function updateIndex(index) {
   return {
     type: 'UPDATE_INDEX',
@@ -12,17 +14,23 @@ export function updateIndex(index) {
   }
 }
 
-/* dispatches loading status to state -
- * dispatches the response: either fail or success based off api response
- * SEE: './service for more details'
-*/
+/**
+ * [ dispatches loading status to state -
+ *  dispatches the response: either fail or success based off api response
+ *  SEE: './service for more details' ]
+ * @param  {Function} dispatch [Redux; store.dispatch]
+ * @return {Function}          [async () => store.dispatch(dataSuccess|dataFailure)]
+ */
 export function fetchPhotos(dispatch) {
 
   dispatch(dataRequest('PHOTO'))
 
   return async function () {
+
     try {
+
       const payload = await userFeedPhotos()
+
       if(payload.data) {
         return  dispatch(dataSuccess({
           data: payload.data
@@ -31,7 +39,9 @@ export function fetchPhotos(dispatch) {
         ))
       }
       throw new Error('no payload.data')
+
     } catch (error) {
+
       return dispatch(dataFailure(error, 'PHOTO'))
     }
   }

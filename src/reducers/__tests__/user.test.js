@@ -3,10 +3,10 @@ import UserReducer from '../user'
 
 describe('#User Reducer', function () {
 
+
   it('should return default state',function () {
 
     expect(UserReducer(undefined)).toEqual({
-
       bioToggle   : false,
       data        : {},
       isLoading   : true,
@@ -20,7 +20,6 @@ describe('#User Reducer', function () {
 
       type: 'USER_FETCH_DATA_SUCCESS',
       data: 'hello world'
-
     })).toMatchObject({
 
       data        : 'hello world',
@@ -36,7 +35,6 @@ describe('#User Reducer', function () {
 
       type : 'USER_FETCH_ERROR',
       error: new Error('error')
-
     })).not.toEqual({
 
       data        : 'hello world',
@@ -48,7 +46,6 @@ describe('#User Reducer', function () {
 
       type : 'USER_FETCH_ERROR',
       error: new Error('error')
-
     })).toHaveProperty('error')
 
   })
@@ -58,7 +55,6 @@ describe('#User Reducer', function () {
     expect(UserReducer(undefined, {
 
       type: 'TOGGLE_BIO'
-
     })).toMatchObject({
 
       bioToggle:true

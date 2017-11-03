@@ -11,6 +11,10 @@ export default Photo
 
 const { width } = Dimensions.get('window')
 
+
+/*
+* Individual items to be rendered inside of the slider
+*/
 function Photo({photo}) {
   return (
     <View style={styles.border}>
@@ -19,6 +23,9 @@ function Photo({photo}) {
         style={styles.image} />
     </View>
   )
+}
+Photo.propTypes = {
+  photo: propTypes.object.isRequired
 }
 
 const styles = StyleSheet.create({
@@ -30,8 +37,3 @@ const styles = StyleSheet.create({
     width : width * 0.95,
   },
 })
-
-
-Photo.propTypes = {
-  photo: propTypes.object
-}

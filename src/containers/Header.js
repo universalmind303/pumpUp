@@ -1,20 +1,26 @@
 import propTypes   from 'prop-types'
 import React       from 'react'
-import { Text,
+import {
+  ActivityIndicator,
   View,
+  Text,
   StyleSheet,
-  TouchableOpacity,
   ScrollView,
   Dimensions,
   Image }          from 'react-native'
 import { connect } from 'react-redux'
 
-import { fetchUser, toggleBio } from '../actions/user'
+import { fetchUser } from '../actions/user'
+import Bio           from '../components/Bio'
 
 export default connect(mapState, mapDispatch)(Header)
 
 const {height, width} = Dimensions.get('window')
 
+
+/*
+* Creates a Header and populates it with information from API
+*/
 function Header ( {
   user: {
     isNotStarted,
@@ -27,39 +33,51 @@ function Header ( {
     },
     bioToggle
   },
-  getUserProfile,
-  toggleBio
+  getUserProfile
 })
 {
   if(isNotStarted) {
     getUserProfile()
+    return (
+      <ActivityIndicator />
+    )
   }
   if(isLoading) {
     return (
-      <View>
-        <Text style={styles.color} >is loading</Text>
-      </View>
+      <ActivityIndicator />
     )
   }
+
   return (
     <ScrollView>
       <View style={styles.topBorder} />
-      <View style={[styles.header, {height: bioToggle ? height : height * 0.2}]}>
+      <View style={[styles.header, {height: bioToggle ? height : height * 0.22}]}>
         <View style={styles.row}>
           <Image source={{uri: profileThumbnail}} style={styles.profileImage}/>
           <View style={styles.profileInfo}>
             <Text style={styles.userName}>{name.toUpperCase()}</Text>
-            <TouchableOpacity onPress={toggleBio}>
-              <Text>{!bioToggle
-                ? bio.split('\n').slice(0,2)
-                : bio} ...read {bioToggle ? 'less' : 'more'}</Text>
-            </TouchableOpacity>
+            <Bio shortOrFullBio={bioToggle}/>
           </View>
         </View>
       </View>
     </ScrollView>
   )
 }
+Header.propTypes = {
+  getUserProfile: propTypes.func,
+  toggleBio     : propTypes.func,
+  user          : propTypes.object,
+}
+
+
+
+////////////////////////
+// State and Dispatch //
+////////////////////////
+
+
+
+
 
 function mapState(state) {
   return {
@@ -69,11 +87,19 @@ function mapState(state) {
 
 function mapDispatch(dispatch) {
   return {
-    toggleBio: () => dispatch(toggleBio()),
     getUserProfile: () => dispatch(fetchUser(dispatch))
   }
 }
-// styles [CTRL+ENTER]
+
+
+
+////////////
+// Styles //
+////////////
+
+
+
+
 
 const profileImageSize = height * 0.18
 const styles = StyleSheet.create({
@@ -112,9 +138,3 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 })
-
-Header.propTypes = {
-  getUserProfile: propTypes.func,
-  toggleBio     : propTypes.func,
-  user          : propTypes.object,
-}

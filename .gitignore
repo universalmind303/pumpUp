@@ -59,3 +59,8 @@ coverage/
 
 # linter
 *.eslintrc
+
+# api tokens
+config.js
+*/config.js
+/config.js

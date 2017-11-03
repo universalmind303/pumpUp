@@ -3,6 +3,7 @@ import FeedReducer from '../feed'
 
 describe('#Feed Reducer', function () {
 
+
   it('should return default state',function () {
     expect(FeedReducer(undefined)).toEqual({
       isNotStarted: true,
@@ -10,6 +11,7 @@ describe('#Feed Reducer', function () {
       data: {},
     })
   })
+
   it('should add data on successful fetch', function() {
     expect(FeedReducer(undefined,{
       type: 'FEED_FETCH_DATA_SUCCESS',
@@ -20,6 +22,7 @@ describe('#Feed Reducer', function () {
       data: 'hello world',
     })
   })
+
   it('should add an error message on failed fetch', function() {
     expect(FeedReducer(undefined,{
       type: 'FEED_FETCH_ERROR',
@@ -29,8 +32,11 @@ describe('#Feed Reducer', function () {
       isLoading: false,
       data: 'hello world',
     })
+
     expect(FeedReducer(undefined,{
       type: 'FEED_FETCH_ERROR',
       error: new Error('error')
     })).toHaveProperty('error')
-  })})
+
+  })
+})
