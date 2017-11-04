@@ -11,6 +11,7 @@ import thunk        from 'redux-thunk'
 
 import App          from './src/index'
 import rootReducer  from './src/reducers/index'
+
 export default Main
 
 const middleware = [thunk]

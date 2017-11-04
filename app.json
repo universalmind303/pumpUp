@@ -1,4 +1,5 @@
 {
-  "name": "pumpUp",
-  "displayName": "pumpUp"
+  "expo": {
+    "sdkVersion": "22.0.0"
+  }
 }
