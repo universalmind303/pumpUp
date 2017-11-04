@@ -1,8 +1,8 @@
 import propTypes   from 'prop-types'
 import React       from 'react'
 import {
-  StyleSheet,
   ActivityIndicator,
+  StyleSheet,
   View,
 }                  from 'react-native'
 import { connect } from 'react-redux'
@@ -17,9 +17,9 @@ const IMAGES_PER_ROW = 3
 
 function Grid({
   feed: {
-    isNotStarted,
+    data,
     isLoading,
-    data
+    isNotStarted,
   },
   getFeed
 })
@@ -60,6 +60,18 @@ function Grid({
     )
   }
 }
+Grid.propTypes = {
+  feed   : propTypes.object,
+  getFeed: propTypes.func.isRequired
+}
+
+
+////////////////////////
+// State and Dispatch //
+////////////////////////
+
+
+
 
 
 function mapState({feed}) {
@@ -75,14 +87,18 @@ function mapDispatch(dispatch) {
 }
 
 
+
+////////////
+// STYLES //
+////////////
+
+
+
+
+
 const styles = StyleSheet.create({
   rowContainer: {
     flex         :1,
     flexDirection: 'row',
   }
 })
-
-Grid.propTypes = {
-  feed   : propTypes.object,
-  getFeed: propTypes.func
-}

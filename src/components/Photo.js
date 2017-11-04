@@ -1,10 +1,10 @@
 import propTypes from 'prop-types'
 import React     from 'react'
 import {
-  View,
-  Image,
   Dimensions,
-  StyleSheet
+  Image,
+  StyleSheet,
+  View,
 }                from 'react-native'
 
 export default Photo

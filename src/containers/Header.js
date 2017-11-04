@@ -2,12 +2,13 @@ import propTypes   from 'prop-types'
 import React       from 'react'
 import {
   ActivityIndicator,
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
   Dimensions,
-  Image }          from 'react-native'
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+}                  from 'react-native'
 import { connect } from 'react-redux'
 
 import { fetchUser } from '../actions/user'
@@ -23,15 +24,15 @@ const { height, width } = Dimensions.get('window')
 */
 function Header ( {
   user: {
+    bioToggle,
     isNotStarted,
     isLoading,
     data: {
-      name,
       bio,
+      name,
       profileInfo,
       profileThumbnail
     },
-    bioToggle
   },
   getUserProfile
 })

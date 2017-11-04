@@ -5,6 +5,7 @@ describe('#Feed Reducer', function () {
 
 
   it('should return default state',function () {
+
     expect(FeedReducer(undefined)).toEqual({
       isNotStarted: true,
       isLoading: true,
@@ -13,6 +14,7 @@ describe('#Feed Reducer', function () {
   })
 
   it('should add data on successful fetch', function() {
+
     expect(FeedReducer(undefined,{
       type: 'FEED_FETCH_DATA_SUCCESS',
       data: 'hello world'
@@ -24,6 +26,7 @@ describe('#Feed Reducer', function () {
   })
 
   it('should add an error message on failed fetch', function() {
+    
     expect(FeedReducer(undefined,{
       type: 'FEED_FETCH_ERROR',
       error: new Error('error')

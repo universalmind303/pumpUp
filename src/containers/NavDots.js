@@ -25,7 +25,8 @@ function NavDots({
   photos,
   scrollX,
   xPosition,
-}) {
+})
+{
   return (
     <View style={{ flexDirection: 'row' }}>
       {photos.map(opacityControl)}
@@ -34,9 +35,9 @@ function NavDots({
 
   /**
    * [Sets the opacity based off index ]
-   * @param  {_} _          [ _ used to signify unimportant value ]
-   * @param  {index} index  [ index value]
-   * @return {Object}       [ React component of individual navigation dots]
+   * @param  {_} _            [ _ used to signify unused value ]
+   * @param  {Number} index   [ index value]
+   * @return {Object}         [ React component of individual navigation dots]
    */
   function opacityControl(_,index) {
     const opacity = xPosition.interpolate({
@@ -56,6 +57,7 @@ function NavDots({
 }
 
 
+
 ////////////////////////
 // State and Dispatch //
 ////////////////////////
@@ -73,7 +75,7 @@ function mapState({photos}) {
 }
 function mapDispatch(dispatch){
   return {
-    handlePress: (ctx) => dispatch(updateIndex(ctx))
+    handlePress: ctx => dispatch(updateIndex(ctx))
   }
 }
 

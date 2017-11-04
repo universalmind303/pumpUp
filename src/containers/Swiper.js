@@ -47,8 +47,10 @@ class Swiper extends React.Component {
   render () {
     const {
       photos: {
+        data,
+        isLoading,
         isNotStarted,
-        isLoading
+        scrollX,
       },
       getPhotos
     } = this.props
@@ -66,48 +68,39 @@ class Swiper extends React.Component {
       )
     }
 
-    const {
-      photos: {
-        data,
-        scrollX,
-      }
-    } = this.props
-
     return (
       <View style={styles.container}>
         <FlatList
-          ref={ref => {this._FlatList = ref}}
+          data={data.result.posts}
+          getItemLayout={(data, index) => ({
+            length: width,
+            offset: width * index,
+            index
+          })}
           horizontal={true}
-          getItemLayout={(data, index) => (
-            {
-              length: width,
-              offset: width * index,
-              index
-            }
-          )}
-          onScroll={Animated.event(
-            [{ nativeEvent: {
-              contentOffset: {
-                x: scrollX
-              }
-            }}]
-          )}
           keyExtractor={item => item.objectId}
           pagingEnabled={true}
+          onScroll={Animated.event(
+            [{
+              nativeEvent: {
+                contentOffset: {
+                  x: scrollX
+                }
+              }
+            }]
+          )}
           showsHorizontalScrollIndicator={false}
-          data={data.result.posts}
+          ref={ref => {this._FlatList = ref}}
           renderItem={photoRender}
         />
         <NavDots photos={data.result.posts} />
       </View>
     )
-
   }
-
 }
 Swiper.propTypes = {
+  getPhotos: propTypes.func.isRequired,
   photos   : propTypes.object,
-  getPhotos: propTypes.func,
 }
 
 // a wrapper for our Photo to play nicely with Array.prototype.map
@@ -119,7 +112,7 @@ function photoRender({item}) {
   )
 }
 photoRender.propTypes = {
-  item: propTypes.object,
+  item: propTypes.object.isRequired,
 }
 
 
@@ -165,5 +158,5 @@ const styles = StyleSheet.create({
 
 
 
-// this export had to be put at bottom because it is a class.
+// this export had to be put at bottom because classes do not hoist the same as functions
 export default connect(mapState, mapDispatch)(Swiper)

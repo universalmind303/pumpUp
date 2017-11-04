@@ -1,14 +1,14 @@
 import propTypes from 'prop-types'
 import React     from 'react'
 import {
-  Image,
   Dimensions,
+  Image,
 }                from 'react-native'
 
 export default GridItem
 
 const { width } = Dimensions.get('window')
-const margin    = width * 0.002
+const MARGIN    = width * 0.002
 
 
 /*
@@ -16,7 +16,7 @@ const margin    = width * 0.002
 */
 function GridItem({photo, rowLength}) {
 
-  const imageWidth  = ( width  / rowLength ) - ( margin * rowLength )
+  const imageWidth  = ( width  / rowLength ) - ( MARGIN * rowLength )
   const imageHeight = width / rowLength
 
   return (
@@ -28,7 +28,7 @@ function GridItem({photo, rowLength}) {
   // Dynamically render the styles based off props
   function styleGenerator(height, width) {
     return {
-      margin: margin,
+      margin: MARGIN,
       height: height,
       width : width,
     }

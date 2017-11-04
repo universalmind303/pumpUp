@@ -11,8 +11,7 @@ export default App
 function App() {
   return (
     <View>
-      <ScrollView
-        showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <Header/>
         <Swiper />
         <Grid />
