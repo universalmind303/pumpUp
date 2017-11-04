@@ -1,17 +1,20 @@
-import propTypes   from 'prop-types'
-import React       from 'react'
+import propTypes          from 'prop-types'
+import React              from 'react'
 import {
-  View,
-  TouchableOpacity,
   Animated,
+  Dimensions,
   StyleSheet,
-}                  from 'react-native'
-import { connect } from 'react-redux'
+  TouchableOpacity,
+  View,
+}                         from 'react-native'
+import { connect }        from 'react-redux'
+import { createSelector } from 'reselect'
 
-import { updateIndex }  from '../actions/photos'
+import { updateIndex } from '../actions/photos'
 
 export default connect(mapState, mapDispatch)(NavDots)
 
+const { width } = Dimensions.get('window')
 
 /*
 * Navigation dots for Our slider component
@@ -31,19 +34,19 @@ function NavDots({
 
   /**
    * [Sets the opacity based off index ]
-   * @param  {_} _ [we use _ because we do not need it]
-   * @param  {index} i  [index value]
-   * @return {Object}   [React component of individual navigation dots]
+   * @param  {_} _          [ _ used to signify unimportant value ]
+   * @param  {index} index  [ index value]
+   * @return {Object}       [ React component of individual navigation dots]
    */
-  function opacityControl(_,i) {
+  function opacityControl(_,index) {
     const opacity = xPosition.interpolate({
-      inputRange : [i - 1, i, i + 1],
+      inputRange : [index - 1, index, index + 1],
       outputRange: [0.3, 1, 0.3],
       extrapolate: 'clamp'
     })
     return (
-      <TouchableOpacity onPress={() => handlePress(i)}
-        key={i}>
+      <TouchableOpacity onPress={() => handlePress(index)}
+        key={index}>
         <Animated.View
           style={[{opacity}, styles.dots]}
         />
@@ -65,7 +68,7 @@ function mapState({photos}) {
   return {
     index    : photos.index,
     scrollX  : photos.scrollX,
-    xPosition: photos.xPosition,
+    xPosition: positionSelector(photos),
   }
 }
 function mapDispatch(dispatch){
@@ -73,6 +76,15 @@ function mapDispatch(dispatch){
     handlePress: (ctx) => dispatch(updateIndex(ctx))
   }
 }
+
+const position = photos => photos.scrollX
+
+const positionSelector = createSelector(
+  [position],
+  (position) => {
+    return Animated.divide(position, width)
+  }
+)
 
 
 

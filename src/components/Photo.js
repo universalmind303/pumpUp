@@ -28,6 +28,16 @@ Photo.propTypes = {
   photo: propTypes.object.isRequired
 }
 
+
+
+////////////
+// STYLES //
+////////////
+
+
+
+
+
 const styles = StyleSheet.create({
   border: {
     margin: width * 0.025,

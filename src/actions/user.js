@@ -1,9 +1,10 @@
 import { dataFailure, dataSuccess, dataRequest } from './requests'
 import { getUserProfile }                        from './service'
 
+export { toggleBio, fetchUser }
 
 // toggles the visibility of the expanded bio information
-export function toggleBio() {
+function toggleBio() {
   return {
     type: 'TOGGLE_BIO'
   }
@@ -16,7 +17,7 @@ export function toggleBio() {
  * @param  {Function} dispatch [Redux; store.dispatch]
  * @return {Function}          [async () => store.dispatch(dataSuccess|dataFailure)]
  */
-export function fetchUser(dispatch) {
+function fetchUser(dispatch) {
 
   dispatch(dataRequest('USER'))
 

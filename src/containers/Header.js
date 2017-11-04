@@ -11,11 +11,11 @@ import {
 import { connect } from 'react-redux'
 
 import { fetchUser } from '../actions/user'
-import Bio           from '../components/Bio'
+import Bio           from './Bio'
 
 export default connect(mapState, mapDispatch)(Header)
 
-const {height, width} = Dimensions.get('window')
+const { height, width } = Dimensions.get('window')
 
 
 /*

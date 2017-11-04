@@ -1,13 +1,13 @@
-import propTypes from 'prop-types'
-import React     from 'react'
+import propTypes          from 'prop-types'
+import React              from 'react'
 import {
   Text,
   View,
   TouchableOpacity
-}                from 'react-native'
-import { connect } from 'react-redux'
-
+}                         from 'react-native'
+import { connect }        from 'react-redux'
 import { createSelector } from 'reselect'
+
 import { toggleBio } from '../actions/user'
 
 export default connect(mapState, mapDispatch)(Bio)
@@ -22,7 +22,9 @@ export default connect(mapState, mapDispatch)(Bio)
 
 
 
-
+/*
+ * Component for rendering Bio details
+ */
 function Bio({
   bio: {
     shortBio,
@@ -72,11 +74,11 @@ function mapDispatch(dispatch) {
 const bio = ({data}) => data.bio
 
 const bioParser = createSelector(
-  [bio], (bio) => {
-    return {
-      fullBio: fullParser(bio, handleLink),
-      shortBio: shortParser(bio, handleLink)
-    }}
+  [bio],
+  (bio) => ({
+    fullBio : textParser(bio, handleLink),
+    shortBio: shortParser(bio, handleLink)
+  })
 )
 
 
@@ -103,56 +105,66 @@ function handleLink(ctx) {
  * [Parses @ and # from the bio and turns them into links]
  * @param  {String}   text       [text to be parsed into links and <Text> objects]
  * @param  {Function} callback   [desired function for the onPress handler]
- * @return {Object[]}            [see: stringToReactNative for details]
+ * @return {Array[]}             [see: stringToReactNative for details]
  */
-function fullParser(text, callback) {
+function textParser(text, callback) {
 
-  const links = text.match(/[#@].*?([\s])/ig)
+  /*
+   * regex matching:
+   * split array by whitespace [\s] and save seperator ( )
+   */
   const textArray = text.split(/([\s])/)
 
-  links.forEach((link) => {
+  textArray.forEach((body, index) => {
 
-    for(let i = 0; i < textArray.length; i++) {
+    /*
+     * regex matching:
+     * match either # or @                [#@]
+     * followed by anything of any length .*?
+     */
+    if(/[#@].*?/.test(body)) {
 
-      if(/[#@].*?/.test(textArray[i])) {
-
-        textArray[i] = (
-          <Text
-            key={textArray[i]}
-            style={{color: 'blue'}}
-            onPress={callback}
-          >{textArray[i]}
-          </Text>
-        )
-      }
+      // if it starts with # or @, replace it with a <Text> Component
+      textArray[index] = (
+        <Text
+          key={body}
+          style={{color: 'blue'}}
+          onPress={callback}
+        >{body}
+        </Text>
+      )
     }
   })
   return stringToReactNative(textArray)
 }
 
 /**
- * [Similar to fullParser, but shortens it to max of 3 rows first]
+ * [Similar to textParser, but shortens it to max of 3 rows first]
  * @param  {String}   text       [text to be parsed into links and <Text> objects: max length of 3 rows]
  * @param  {Function} callback   [desired function for the onPress handler]
  * @return {Object[]}            [see: stringToReactNative for details]
  */
 function shortParser(text, callback) {
 
+  /*
+   * regex matching:
+   * split array by return or newline [\r\n] and save seperator ( )
+   */
   const textArray = text.split(/([\r\n])/g)
   let returnCount = 0
   let shortened
 
-  for(let i = 0; i < textArray.length; i++) {
+  textArray.forEach((body, index) => {
 
     if(returnCount === 3) {
-      shortened =  textArray.slice(0,i)
+      shortened = textArray.slice(0,index)
     }
-    if(textArray[i] === '\n') {
+    if(body === '\n') {
       returnCount++
     }
-  }
+  })
 
-  return fullParser(shortened.join(' '), callback)
+  return textParser(shortened.join(' '), callback)
 }
 
 /**
@@ -168,17 +180,29 @@ function shortParser(text, callback) {
  */
 function stringToReactNative(stringAndObjects) {
 
-  let textString = ''
+  /**
+   * [Array of <Text> components]
+   * @type {Array[<Type>]}
+   */
   let reactArray = []
+  let textString = ''
 
-  for(let i = 0; i < stringAndObjects.length; i++){
+  stringAndObjects.forEach((stringOrObject, index) => {
 
-    if(typeof(stringAndObjects[i]) !== 'string') {
-      reactArray.push(<Text key={i}>{textString}</Text>, stringAndObjects[i])
+    // if stringOrObject !== string, concat everything before that into <Text>
+    if(typeof(stringOrObject) !== 'string') {
+
+      // append new <Text> to reactArray
+      reactArray.push(<Text key={index}>{textString}</Text>, stringOrObject)
+
+      // reset textString
       textString = ''
+
     } else {
-      textString += stringAndObjects[i]
+
+      // concat text string from array[index]
+      textString += stringOrObject
     }
-  }
+  })
   return reactArray
 }

@@ -2,14 +2,16 @@
  * Helper functions go in this file
  */
 
+export { splitIntoSubArrays }
 
 /**
- * [splitIntoSubArrays description]
+ * [splitIntoSubArrays]
  * @param  {Array} array   [an array you wish to split into multiple arrays]
- * @param  {number} n      [desired sub-array length]
- * @return {Array[]}       [2 dimensional array of array/n length]
+ * @param  {Number} n      [desired sub-array length]
+ * @return {Array[]}       [2 dimensional array of array.length / n ]
  */
-export function splitIntoSubArrays(array, n ) {
+function splitIntoSubArrays(array, n ) {
+
   return !array.length
     ? []
     : [ array.slice( 0, n ) ]

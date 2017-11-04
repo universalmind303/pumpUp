@@ -1,13 +1,13 @@
 import { dataFailure, dataSuccess, dataRequest } from './requests'
 import { userFeedPhotos }                        from './service'
 
-
+export { updateIndex, fetchPhotos }
 /**
  * [updateIndex]
  * @param  {Number} index [current index of photo or navigation dot in slider]
  * @return {Object}       [action creator for redux store]
  */
-export function updateIndex(index) {
+function updateIndex(index) {
   return {
     type: 'UPDATE_INDEX',
     index: index
@@ -21,7 +21,7 @@ export function updateIndex(index) {
  * @param  {Function} dispatch [Redux; store.dispatch]
  * @return {Function}          [async () => store.dispatch(dataSuccess|dataFailure)]
  */
-export function fetchPhotos(dispatch) {
+function fetchPhotos(dispatch) {
 
   dispatch(dataRequest('PHOTO'))
 

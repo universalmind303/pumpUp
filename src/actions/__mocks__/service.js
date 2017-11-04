@@ -1,3 +1,5 @@
+export { getUserProfile, userFeedPhotos, popularFeedPhotos }
+
 const photoResponse = {
   status: 200,
   data  : {
@@ -41,7 +43,7 @@ const photoResponse = {
   }
 }
 
-export async function getUserProfile() {
+async function getUserProfile() {
   const payload = {
     status: 200,
     data  : {
@@ -72,11 +74,10 @@ export async function getUserProfile() {
   }
   return payload
 }
-
-export async function userFeedPhotos() {
+async function userFeedPhotos() {
   return photoResponse
 }
 
-export async function popularFeedPhotos() {
+async function popularFeedPhotos() {
   return photoResponse
 }

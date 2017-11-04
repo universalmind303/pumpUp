@@ -36,6 +36,6 @@ function GridItem({photo, rowLength}) {
 }
 
 GridItem.propTypes = {
-  photo    : propTypes.object,
-  rowLength: propTypes.number
+  photo    : propTypes.object.isRequired,
+  rowLength: propTypes.number.isRequired
 }

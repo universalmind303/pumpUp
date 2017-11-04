@@ -1,6 +1,7 @@
 import { dataFailure, dataSuccess, dataRequest } from './requests'
 import { popularFeedPhotos }                     from './service'
 
+export { fetchFeed }
 /**
  * [ dispatches loading status to state -
  *  dispatches the response: either fail or success based off api response
@@ -8,7 +9,7 @@ import { popularFeedPhotos }                     from './service'
  * @param  {Function} dispatch [Redux; store.dispatch]
  * @return {Function}          [async () => store.dispatch(dataSuccess|dataFailure)]
  */
-export function fetchFeed(dispatch) {
+function fetchFeed(dispatch) {
 
   dispatch(dataRequest('FEED'))
 
